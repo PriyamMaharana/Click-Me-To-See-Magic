@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishing You!!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #EAB8D1; /* Soft Mauve Pink */
+            --secondary-color: #C6C1D9; /* Lavender Gray */
+            --background-color: #2C2129; /* Deep Plum */
+            --glass-color: rgba(60, 42, 91, 0.25); /* Translucent Plum */
+            --border-color: rgba(234, 184, 209, 0.2);
+            --text-color: #F5F5F0; /* Off-White */
+            --highlight-color: #FFFFFF;
+            --cake-icing: #F0E4F4;
+            --cake-layer1: #D9A8C7;
+            --cake-layer2: #B784A7;
+            --flame-color: #FFA500;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem; /* Padding for mobile */
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--highlight-color);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            color: var(--primary-color);
+            animation: fadeIn 2s ease-in-out 0.5s;
+        }
+
+        .scroll-down {
+            margin-top: 3rem;
+            animation: bounce 2s infinite;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 6rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        /* Bento Grid Layout */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted minmax for better mobile fit */
+            gap: 1.5rem;
+        }
+
+        .bento-item {
+            background: var(--glass-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        
+        .bento-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--highlight-color);
+        }
+
+        .bento-item p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--secondary-color);
+        }
+
+        /* Interactive Elements */
+        .interactive-section {
+            text-align: center;
+        }
+        
+        .memory-lane {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .memory {
+            width: 250px;
+            height: 450px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .memory:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Celebration Section - CSS Animations */
+        .celebration-container {
+            position: relative;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        /* CSS Cake */
+        .cake {
+            position: relative;
+            width: 220px;
+            height: 200px;
+        }
+
+        .plate {
+            width: 220px;
+            height: 15px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+        
+        .cake-layer {
+            position: absolute;
+            width: 180px;
+            height: 60px;
+            left: 20px;
+            background-color: var(--cake-layer1);
+        }
+
+        .layer-bottom { bottom: 10px; }
+        .layer-top { bottom: 70px; height: 70px; background-color: var(--cake-layer2); }
+        .icing { position: absolute; width: 180px; height: 25px; background-color: var(--cake-icing); bottom: 140px; left: 20px; border-radius: 50% 50% 0 0; }
+        
+        .candle {
+            position: absolute;
+            width: 12px;
+            height: 40px;
+            background-color: var(--primary-color);
+            bottom: 160px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .flame {
+            position: absolute;
+            width: 12px;
+            height: 20px;
+            background-color: var(--flame-color);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: -18px;
+            animation: flicker 1.5s ease-in-out infinite;
+        }
+
+        /* CSS Cat */
+        .css-cat {
+            position: absolute;
+            bottom: 10px;
+            right: 15%;
+            width: 100px;
+            height: 100px;
+            animation: cat-float 4s ease-in-out infinite;
+        }
+
+        .cat-body {
+            position: absolute;
+            width: 80px;
+            height: 90px;
+            background-color: #4A3A47; /* Dark cat color */
+            border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%;
+            bottom: 0;
+            left: 10px;
+        }
+        
+        .cat-head {
+            position: absolute;
+            width: 60px;
+            height: 55px;
+            background-color: #4A3A47;
+            border-radius: 50%;
+            top: -15px;
+            left: 20px;
+        }
+
+        .ear {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 20px solid #4A3A47;
+            top: -10px;
+        }
+
+        .ear-left { left: 0; }
+        .ear-right { right: 0; }
+        
+        .tail {
+            position: absolute;
+            width: 15px;
+            height: 70px;
+            background-color: #4A3A47;
+            border-radius: 10px;
+            bottom: 60px;
+            left: -5px;
+            transform-origin: bottom center;
+            animation: sway-tail 3s ease-in-out infinite;
+        }
+
+        .final-wish {
+            text-align: center;
+            font-size: 1.8rem;
+            line-height: 1.8;
+            color: var(--primary-color);
+        }
+
+        
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-20px); } 60% { transform: translateY(-10px); } }
+        @keyframes flicker { 0%, 100% { transform: scaleY(1); opacity: 1; } 50% { transform: scaleY(0.95); opacity: 0.9; } }
+        @keyframes sway-tail { 0%, 100% { transform: rotate(10deg); } 50% { transform: rotate(-20deg); } }
+        @keyframes cat-float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+
+        /* --- Media Queries for Responsiveness --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3.5rem; }
+            .hero p { font-size: 1.2rem; }
+            h2 { font-size: 2.5rem; }
+
+            .memory-lane {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .celebration-container {
+                height: auto;
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .css-cat {
+                position: relative; /* Change from absolute */
+                right: auto;
+                bottom: auto;
+                transform: scale(0.9); /* Slightly scale down cat */
+            }
+
+            .final-wish { font-size: 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 3rem; }
+            h2 { font-size: 2rem; }
+            .bento-item { padding: 1.5rem; }
+            .bento-item h3 { font-size: 1.3rem; }
+            .content-section { padding: 4rem 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1>Happy Birthday <br> 😻 Jyothi 😻</h1><br><br>
+        <p><span>🎂</span> <br>A special day for a truly special one!</p><br><br>
+        <div class="scroll-down">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21L12 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17 16L12 21L7 16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="content-section" id="message">
+            <h2>A Message For You</h2>
+            <div class="bento-grid">
+                <div class="bento-item">
+                    <h3>Thinking of You</h3>
+                    <p>On this day, the world became a little brighter. I'm so grateful for every moment we've shared and can't wait to see what the future holds.</p>
+                </div>
+                <div class="bento-item">
+                    <h3>My Wish For You</h3>
+                    <p>May your birthday be just the beginning of a year filled with happy memories, wonderful moments, and shining dreams.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="cherish">
+            <h2>Reasons I Cherish You</h2>
+            <div class="bento-grid">
+                <div class="bento-item">
+                    <h3>Your Kindness</h3>
+                    <p>You have a way of making everyone around you feel special. Your kindness is a gift to this world.</p>
+                </div>
+                <div class="bento-item">
+                    <h3>Your Laughter</h3>
+                    <p>Your laugh is infectious and can brighten up even the darkest of days. I hope to hear it for many years to come.</p>
+                </div>
+                <div class="bento-item">
+                    <h3>Your Strength</h3>
+                    <p>You face every challenge with grace and strength. You are an inspiration to me and so many others.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section" id="celebration">
+             <h2>Time to Celebrate!</h2>
+             <div class="celebration-container">
+                 <div class="cake">
+                     <div class="plate"></div>
+                     <div class="cake-layer layer-bottom"></div>
+                     <div class="cake-layer layer-top"></div>
+                     <div class="icing"></div>
+                     <div class="candle">
+                         <div class="flame"></div>
+                     </div>
+                 </div>
+                 <div class="css-cat">
+                     <div class="tail"></div>
+                     <div class="cat-body"></div>
+                     <div class="cat-head">
+                        <div class="ear ear-left"></div>
+                        <div class="ear ear-right"></div>
+                     </div>
+                 </div>
+             </div>
+        </section>
+
+        <section class="content-section interactive-section" id="memories">
+            <h2>A Walk Down Memory Lane</h2>
+            <div class="memory-lane">                
+                <div class="memory" style="background-image: url('https://lh3.googleusercontent.com/u/0/d/1WV-0kOjjhXXqTCbUVfOusgl8T6phzHPt');" ></div>
+                <div class="memory" style="background-image: url('https://lh3.googleusercontent.com/u/0/d/1Nd8TQzILOwkcQxgN3knffzKSqp72cKOe');" ></div>
+                <div class="memory" style="background-image: url('https://lh3.googleusercontent.com/u/0/d/1YEX0VmWiaWihzHQmF6UPcWCXJL4vNu0z');" ></div>
+                <div class="memory" style="background-image: url('https://lh3.googleusercontent.com/u/0/d/152ZAlpEXB0nVC8lP_orSNA6n-1yx-4X-');" ></div>
+                <div class="memory" style="background-image: url('https://lh3.googleusercontent.com/u/0/d/11jy6b2Mr4j-iCObQZr0yNMmzKzSNTOAB');" ></div>
+                <div class="memory" style="background-image: url('https://lh3.googleusercontent.com/u/0/d/1BvUBdeTvztoMfAKIUkmu4Ms7Lm3L0fSs');" ></div>
+                <div class="memory" style="background-image: url('https://lh3.googleusercontent.com/u/0/d/1JteLyxQSlCfprFES3_C-J6DmBnflxjv-');" ></div>                
+                <div class="memory" style="background-image: url('https://lh3.googleusercontent.com/u/0/d/1R31PSr-GznPStJlAC24Sw5QL2Ct21kZU');" ></div>
+               
+                
+                <iframe class="memory" src="https://drive.google.com/file/d//1yPPaHO145esmyzR9vQLO6kkDJghnUiZU/preview"  allow="autoplay" ></iframe>
+                <iframe class="memory" src="https://drive.google.com/file/d///1iHmfGam11cbS3xz4PriGEU5JkpYGEsKI/preview"  allow="autoplay" ></iframe>
+                <iframe class="memory" src="https://drive.google.com/file/d//1Nd8TQzILOwkcQxgN3knffzKSqp72cKOe/preview"  allow="autoplay" ></iframe>
+                <iframe class="memory" src="https://drive.google.com/file/d//1pv_CgDhTeTD7o6T9JhZ3t46MC4HlqQ81/preview"  allow="autoplay" ></iframe>
+            </div>
+        </section>
+
+        <section class="content-section" id="final-wish">
+            <p class="final-wish"><br><br>🎂<br>Wishing you the happiest of birthday to the one who deserves the world.<br>
+                 I’ve been thinking so much about how much I wanted to be there with you on your day.. not just for the cake, but just to be there.<br>
+                 I miss our quality time more than I can put into words, and honestly, I even miss the way I used to irritate you just to see you angry but smiling inside.<br> 
+                 My heart is a little heavy that we’re apart today, but I’m holding onto the hope that on your next special day, we’ll be celebrating side-by-side, <br>
+                 making memories just like the old days.<br><br>❤️ Cheers to you.. the beautiful soul you are!! ❤️</p><br><br><br>
+        </section>
+
+        <section class="content-section" id="memories">
+            <h2>My Favoutite Moments (BTS)</h2> 
+            <div class="memory-lane">  
+                <div class="memory" style="background-image: url('https://lh3.googleusercontent.com/u/0/d/16QZBdeEFB7BX88ZbpAdG5adXpUlkcX0r');" ></div>                
+                <div class="memory" style="background-image: url('https://lh3.googleusercontent.com/u/0/d/1xoglWTaegPpXCY7MJHUMGyjxcb1RMt_g');" ></div>
+                <div class="memory" style="background-image: url('https://lh3.googleusercontent.com/u/0/d/1Q4Gi9sOyf7GeKitqtH5LktaLRKimyhpm');"></div>
+                <div class="memory" style="background-image: url('https://lh3.googleusercontent.com/u/0/d/1kNQYqjnaLX3PUXbuRQJNxhvMHZtfdv2o');" ></div>
+            </div>
+        </section>
+
+        <section class="content-section" id="final-wish">
+            <p class="final-wish">Always be Happy, Keep Smiling and Keep Smiling!<br> Once Again, Hapiessttt walaa birthdayyy!! <br>
+                 To my onluuu bestuuu!! <br><br>- Your's only.. yum yum Priyumm</p>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.content-section');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+</body>
+</html>
